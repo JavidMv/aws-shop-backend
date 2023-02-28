@@ -1,0 +1,32 @@
+service: product-service
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  environment:
+    NODE_OPTIONS: --experimental-modules
+
+functions:
+  getProductsList:
+    handler: handler.getProductsList
+    events:
+      - http:
+          method: get
+          path: /products
+          cors: true
+
+  getProductsById:
+    handler: handler.getProductsById
+    events:
+      - http:
+          path: products/{productId}
+          method: get
+          cors: true
